@@ -19,6 +19,8 @@
 <div class="container">
 <h1 class="text-center my-4">All Books</h1>
 <%--<a href="/books?action=create">Create a book</a>--%>
+    <form action="/books" method="GET">
+<input type="hidden" name="book" value="borrow">
 <table class="table table-hover">
     <tr>
         <td>Book ID</td>
@@ -26,7 +28,7 @@
         <td>Author</td>
         <td>Quantity</td>
         <td>Description</td>
-        <td>Borrow</td>
+        <td>Action</td>
 <%--        <td>Update</td>--%>
 <%--        <td>Delete</td>--%>
     </tr>
@@ -37,12 +39,12 @@
             <td>${book.getAuthor()}</td>
             <td>${book.getQuantity()}</td>
             <td>${book.getDescription()}</td>
-            <td><button><a href="/books?action=borrow&id=${book.getId()}">Borrow</a></button></td>
+            <td><button><a class="btn btn-primary text-decoration-none" href="/books?action=borrow&id=${book.getId()}">Borrow</a></button></td>
         </tr>
     </c:forEach>
 
 </table>
-
+    </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

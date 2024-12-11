@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/center_management";
+    private String jdbcURL = "jdbc:mysql://localhost:3306/library";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
 
     private final String SELECT_BOOK = "SELECT * FROM books";
+    private final String SELECT_BOOK_BY_ID = "SELECT * FROM books WHERE id = ?";
 
     @Override
     public Connection getConnection() throws SQLException {
@@ -25,7 +26,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> listBooks() {
-        List<Book> books = new ArrayList<Book>();
+        List<Book> books = new ArrayList<>();
         try (
                 Connection conn = getConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(SELECT_BOOK);
@@ -53,8 +54,26 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book searchById(int id) {
-        return null;
+    public Book searchById(String id) {
+        Book book = null;
+        try (
+                Connection conn = getConnection();
+                PreparedStatement preparedStatement = conn.prepareStatement(SELECT_BOOK_BY_ID);
+        ) {
+            preparedStatement.setString(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String description = rs.getString("description");
+                int quantity = rs.getInt("quantity");
+                book = new Book(id, title, author, description, quantity);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return book;
     }
 
     @Override

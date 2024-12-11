@@ -27,7 +27,7 @@ public class BookServlet extends HttpServlet {
             case "create":
                 showCreatePage(request, response);
                 break;
-            case "update":
+            case "borrow":
                 showUpdatePage(request, response);
                 break;
             case "delete":
@@ -41,66 +41,6 @@ public class BookServlet extends HttpServlet {
                 break;
         }
     }
-
-    private void showCreatePage(HttpServletRequest request, HttpServletResponse response) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("book/create.jsp");
-        try {
-            dispatcher.forward(request, response);
-        }
-        catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void showUpdatePage(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Book book = this.bookService.searchById(id);
-        RequestDispatcher dispatcher;
-        if (book == null) {
-            dispatcher = request.getRequestDispatcher("error.jsp");
-        }
-        else {
-            request.setAttribute("book", book);
-            dispatcher = request.getRequestDispatcher("book/update.jsp");
-        }
-        try {
-            dispatcher.forward(request, response);
-        }
-        catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void showDeletePage(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Book book = this.bookService.searchById(id);
-        RequestDispatcher dispatcher;
-        if (book == null) {
-            dispatcher = request.getRequestDispatcher("error.jsp");
-        } else {
-            request.setAttribute("book", book);
-            dispatcher = request.getRequestDispatcher("book/delete.jsp");
-        }
-        try {
-            dispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void viewDetail(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Book book = this.bookService.searchById(id);
-        RequestDispatcher dispatcher;
-        if (book == null) {
-            dispatcher = request.getRequestDispatcher("error.jsp");
-        } else {
-            request.setAttribute("book", book);
-            dispatcher = request.getRequestDispatcher("book/view.jsp");
-        }
-        try {
-            dispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-    }
     private void listBooks(HttpServletRequest request, HttpServletResponse response) {
         List<Book> books = this.bookService.listBooks();
         request.setAttribute("books", books);
@@ -112,6 +52,66 @@ public class BookServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+    private void showCreatePage(HttpServletRequest request, HttpServletResponse response) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("book/create.jsp");
+        try {
+            dispatcher.forward(request, response);
+        }
+        catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void showUpdatePage(HttpServletRequest request, HttpServletResponse response) {
+        String bookId = request.getParameter("bookId");
+        Book book = this.bookService.searchById(bookId);
+        RequestDispatcher dispatcher;
+//        if (book == null || book.getQuantity() == 0) {
+//            dispatcher = request.getRequestDispatcher("error.jsp");
+//        }
+
+            request.setAttribute("book", book);
+            dispatcher = request.getRequestDispatcher("book/borrow.jsp");
+
+        try {
+            dispatcher.forward(request, response);
+        }
+        catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void showDeletePage(HttpServletRequest request, HttpServletResponse response) {
+//        int id = Integer.parseInt(request.getParameter("id"));
+//        Book book = this.bookService.searchById(id);
+//        RequestDispatcher dispatcher;
+//        if (book == null) {
+//            dispatcher = request.getRequestDispatcher("error.jsp");
+//        } else {
+//            request.setAttribute("book", book);
+//            dispatcher = request.getRequestDispatcher("book/delete.jsp");
+//        }
+//        try {
+//            dispatcher.forward(request, response);
+//        } catch (ServletException | IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+    private void viewDetail(HttpServletRequest request, HttpServletResponse response) {
+//        int id = Integer.parseInt(request.getParameter("id"));
+//        Book book = this.bookService.searchById(id);
+//        RequestDispatcher dispatcher;
+//        if (book == null) {
+//            dispatcher = request.getRequestDispatcher("error.jsp");
+//        } else {
+//            request.setAttribute("book", book);
+//            dispatcher = request.getRequestDispatcher("book/view.jsp");
+//        }
+//        try {
+//            dispatcher.forward(request, response);
+//        } catch (ServletException | IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
 
 
 //====================================================================================================================================================================================================================================================================================================================================================================
@@ -145,7 +145,7 @@ public class BookServlet extends HttpServlet {
 
         Book book = new Book();
         this.bookService.createBook(book);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("book/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("book/borrow.jsp");
         request.setAttribute("message",  "New book was created");
         try{
             dispatcher.forward(request, response);
@@ -183,18 +183,18 @@ public class BookServlet extends HttpServlet {
 //        }
     }
     private void deleteBook(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Book book = this.bookService.searchById(id);
-        RequestDispatcher dispatcher;
-        if (book == null) {
-            dispatcher = request.getRequestDispatcher("error.jsp");
-        } else {
-            this.bookService.deleteBook(id);
-            try {
-                response.sendRedirect("/books");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        String id = Integer.parseInt(request.getParameter("id"));
+//        Book book = this.bookService.searchById(id);
+//        RequestDispatcher dispatcher;
+//        if (book == null) {
+//            dispatcher = request.getRequestDispatcher("error.jsp");
+//        } else {
+//            this.bookService.deleteBook(id);
+//            try {
+//                response.sendRedirect("/books");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }
