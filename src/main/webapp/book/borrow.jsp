@@ -11,7 +11,8 @@
 <body>
 <div class="container">
 <h1 class="text-center my-4">Borrow a book</h1>
-<form method="post">
+<form method="post" action="books?action=update">
+    <input type="hidden" name="bookId" value="${requestScope.book.id}" />
         <table class="table table-hover">
             <tr>
                 <td>Book ID:</td>
@@ -24,21 +25,20 @@
             <tr>
                 <td>Student Name</td>
                 <td>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Select student</option>
-                        <option value="1">Student A</option>
-                        <option value="2">Student B</option>
-                        <option value="3">Student C</option>
+                    <select class="form-select" name="student_id">
+                        <c:forEach var="student" items="${requestScope.students}">
+                            <option value="${student.id}">${student.fullName}</option>
+                        </c:forEach>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>Borrowed Date:</td>
-                <td><input type="datetime-local" id="borrowedDate" name="borrowedDate"></td>
+                <td><input type="text" class="form-control" placeholder="dd/MM/yyyy" id="borrowedDate" name="borrowedDate"></td>
             </tr>
             <tr>
                 <td>Returned Date</td>
-                <td><input type="datetime-local" id="returnedDate" name="returnedDate"></td>
+                <td><input type="text" class="form-control" placeholder="dd/MM/yyyy" id="returnedDate" name="returnedDate"></td>
             </tr>
             <tr>
                 <td>

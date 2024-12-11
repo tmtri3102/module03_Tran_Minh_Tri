@@ -13,37 +13,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <title>Product List</title>
+    <title>Book List</title>
 </head>
 <body>
 <div class="container">
-<h1 class="text-center my-4">All Books</h1>
-<%--<a href="/books?action=create">Create a book</a>--%>
+    <h1 class="text-center my-4">All Books</h1>
+    <p class="text-center">
+        <c:if test='${requestScope.message != null}'>
+            <span class="text-danger fw-bold">${requestScope.message}</span>
+        </c:if>
+    </p>
     <form action="/books" method="GET">
-<input type="hidden" name="book" value="borrow">
-<table class="table table-hover">
-    <tr>
-        <td>Book ID</td>
-        <td>Name</td>
-        <td>Author</td>
-        <td>Quantity</td>
-        <td>Description</td>
-        <td>Action</td>
-<%--        <td>Update</td>--%>
-<%--        <td>Delete</td>--%>
-    </tr>
-    <c:forEach items='${requestScope["books"]}' var="book">
-        <tr>
-            <td>${book.getId()}</td>
-            <td>${book.getName()}</td>
-            <td>${book.getAuthor()}</td>
-            <td>${book.getQuantity()}</td>
-            <td>${book.getDescription()}</td>
-            <td><button><a class="btn btn-primary text-decoration-none" href="/books?action=borrow&id=${book.getId()}">Borrow</a></button></td>
-        </tr>
-    </c:forEach>
+        <input type="hidden" name="bookId" value="borrow">
+        <table class="table table-hover">
+            <tr>
+                <td>Book ID</td>
+                <td>Name</td>
+                <td>Author</td>
+                <td>Quantity</td>
+                <td>Description</td>
+                <td>Action</td>
+                <%--        <td>Update</td>--%>
+                <%--        <td>Delete</td>--%>
+            </tr>
+            <c:forEach items='${requestScope["books"]}' var="book">
+                <tr>
+                    <td>${book.getId()}</td>
+                    <td>${book.getName()}</td>
+                    <td>${book.getAuthor()}</td>
+                    <td>${book.getQuantity()}</td>
+                    <td>${book.getDescription()}</td>
+                    <td>
+                        <button><a class="btn btn-primary text-decoration-none"
+                                   href="/books?action=borrow&bookId=${book.getId()}">Borrow</a></button>
+                    </td>
+                </tr>
+            </c:forEach>
 
-</table>
+        </table>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

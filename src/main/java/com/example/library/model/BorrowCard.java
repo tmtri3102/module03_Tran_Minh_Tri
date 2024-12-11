@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class BorrowCard {
     private int borrowId;
-    private int bookId;
+    private String bookId;
     private int studentId;
     private boolean status; // true = borrowed, false = returned
-    private Date borrowDate;
-    private Date returnDate;
+    private String borrowDate;
+    private String returnDate;
 
-    public BorrowCard(int borrowId, int bookId, int studentId, boolean status, Date borrowDate, Date returnDate) {
+    public BorrowCard(int borrowId, String bookId, int studentId, boolean status, String borrowDate, String returnDate) {
         this.borrowId = borrowId;
         this.bookId = bookId;
         this.studentId = studentId;
@@ -27,11 +27,11 @@ public class BorrowCard {
         this.borrowId = borrowId;
     }
 
-    public int getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 
@@ -51,19 +51,19 @@ public class BorrowCard {
         this.status = status;
     }
 
-    public Date getBorrowDate() {
+    public String getBorrowDate() {
         return borrowDate;
     }
 
     public void setBorrowDate(Date borrowDate) {
-        this.borrowDate = borrowDate;
+        this.borrowDate = String.valueOf(borrowDate);
     }
 
-    public Date getReturnDate() {
+    public String getReturnDate() {
         return returnDate;
     }
 
     public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
+        this.returnDate = String.valueOf(returnDate);
     }
 }
